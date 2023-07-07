@@ -1,14 +1,11 @@
 package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,11 +16,19 @@ import com.kakao.sdk.common.KakaoSdk;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.Account;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -37,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        KakaoSdk.init(this,"b1ce2fb14f0364dbe72795025c0129fd");
+        KakaoSdk.init(this,"");
 
 
         ImageView kakao_login_button = findViewById(R.id.login);
@@ -124,5 +129,4 @@ public class MainActivity extends AppCompatActivity {
             return null;
         });
     }
-
 }

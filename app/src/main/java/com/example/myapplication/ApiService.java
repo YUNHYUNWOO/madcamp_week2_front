@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import org.json.JSONObject;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
@@ -13,7 +15,7 @@ import retrofit2.http.Query;
 
 public interface ApiService {
     @GET("/retrofit/get")
-    Call<ResponseBody> getFunc(@Query("data") String data);
+    Call<ResponseBody> getFunc(@Query("data") JSONObject data);
 
     @FormUrlEncoded
     @POST("/retrofit/post")
