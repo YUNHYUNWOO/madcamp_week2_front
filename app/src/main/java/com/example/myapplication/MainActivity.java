@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        KakaoSdk.init(this,"54c971d29acb9b6d1aa6a55de9f612ec");
+        KakaoSdk.init(this,"");
 
         firstInit();
 
