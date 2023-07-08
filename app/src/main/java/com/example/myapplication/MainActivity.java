@@ -31,21 +31,31 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "KakaoLogin";
     private View loginButton, logoutButton;
     private TextView nickName;
     private ImageView profileImage;
+
+//    private final String URL = "http://172.10.5.180";
+    private final String URL = "https://9272-192-249-19-234.ngrok-free.app";
+
+    private Retrofit retrofit;
+    private ApiService service;
+    private Button btn_get, btn_post, btn_delete, btn_update, kakao_login_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        KakaoSdk.init(this,"");
+        KakaoSdk.init(this,"54c971d29acb9b6d1aa6a55de9f612ec");
 
+        firstInit();
 
-        ImageView kakao_login_button = findViewById(R.id.login);
+        btn_post.setOnClickListener(this);
+
+        kakao_login_button.setOnClickListener(this);
 
 
         Function2<OAuthToken,Throwable, Unit> callback =new Function2<OAuthToken, Throwable, Unit>() {
@@ -66,21 +76,67 @@ public class MainActivity extends AppCompatActivity {
                 return null;
             }
         };
-
-
-        kakao_login_button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if(UserApiClient.getInstance().isKakaoTalkLoginAvailable(MainActivity.this)){
-                    login();
-                }
-                else{
-                    accountLogin();
-                }
-            }
-        });
-
     }
+
+    public void firstInit() {
+        btn_post = (Button) findViewById(R.id.btn_post);
+
+        kakao_login_button = (Button) findViewById(R.id.login);
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        service = retrofit.create(ApiService.class);
+    }
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.login){
+            if(UserApiClient.getInstance().isKakaoTalkLoginAvailable(MainActivity.this)){
+                login();
+            }
+            else{
+                accountLogin();
+            }
+        } else if (v.getId() == R.id.btn_post){
+            EditText idEditText = findViewById(R.id.id_show);
+            EditText passwordEditText = findViewById(R.id.password_show);
+            String id = idEditText.getText().toString();
+            String password = passwordEditText.getText().toString();
+            JSONObject userInfo = new JSONObject();
+            try {
+                userInfo.put("id", id);
+                userInfo.put("password", password);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            Call<ResponseBody> call_get = service.postFunc(userInfo.toString());
+            call_get.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        try {
+                            String result = response.body().string();
+                            Log.v(TAG, "result = " + result);
+                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Log.v(TAG, "error = " + String.valueOf(response.code()));
+                        Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.v(TAG, "Fail");
+                    Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
 
     public void login(){
         String TAG = "login()";

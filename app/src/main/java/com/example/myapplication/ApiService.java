@@ -14,17 +14,17 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
-    @GET("/retrofit/get")
+    @GET("/login/get")
     Call<ResponseBody> getFunc(@Query("data") JSONObject data);
 
     @FormUrlEncoded
-    @POST("/retrofit/post")
+    @POST("/login")
     Call<ResponseBody> postFunc(@Field("data") String data);
 
     @FormUrlEncoded
-    @PUT("/retrofit/put/{id}")
+    @PUT("/login/put/{id}")
     Call<ResponseBody> putFunc(@Path("id") String id, @Field("data") String data);
 
-    @DELETE("/retrofit/delete/{id}")
+    @DELETE("/login/delete/{id}")
     Call<ResponseBody> deleteFunc(@Path("id") String id);
 }

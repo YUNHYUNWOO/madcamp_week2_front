@@ -103,7 +103,18 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         else if(v.getId() == R.id.btn_post) {
-            Call<ResponseBody> call_post = service.postFunc("post data");
+            EditText idEditText = findViewById(R.id.id_show);
+            EditText passwordEditText = findViewById(R.id.password_show);
+            String id = idEditText.getText().toString();
+            String password = passwordEditText.getText().toString();
+            JSONObject userInfo = new JSONObject();
+            try {
+                userInfo.put("id", id);
+                userInfo.put("password", password);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            Call<ResponseBody> call_post = service.postFunc(userInfo.toString());
             call_post.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
