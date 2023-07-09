@@ -1,6 +1,7 @@
 package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,10 +39,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView profileImage;
 
 //    private final String URL = "http://172.10.5.180";
-    private final String URL = "https://9272-192-249-19-234.ngrok-free.app";
+    private final String URL = "https://3726-192-249-19-234.ngrok-free.app";
 
-    private Retrofit retrofit;
-    private ApiService service;
+    public Retrofit retrofit;
+    public ApiService service;
     private Button btn_get, btn_post, btn_delete, btn_update, kakao_login_button;
 
     @Override
@@ -119,6 +120,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String result = response.body().string();
                             Log.v(TAG, "result = " + result);
                             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MainActivity.this, PostActivity.class);
+                            startActivity(intent);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

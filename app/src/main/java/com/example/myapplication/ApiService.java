@@ -14,8 +14,8 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
-    @GET("/login/get")
-    Call<ResponseBody> getFunc(@Query("data") JSONObject data);
+    @GET("/main/getall")
+    Call<PostContents> getAllPosts();
 
     @FormUrlEncoded
     @POST("/login")

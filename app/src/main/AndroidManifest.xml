@@ -35,5 +35,6 @@
                 <data android:host="oauth" android:scheme="" />
             </intent-filter>
         </activity>
+        <activity android:name=".PostActivity" />
     </application>
 </manifest>
