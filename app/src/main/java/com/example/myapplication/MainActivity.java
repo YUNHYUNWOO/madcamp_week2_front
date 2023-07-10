@@ -39,11 +39,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView profileImage;
 
 //    private final String URL = "http://172.10.5.180";
-    private final String URL = "https://3726-192-249-19-234.ngrok-free.app";
+    private final String URL = "https://3e00-192-249-19-234.ngrok-free.app";
 
     public Retrofit retrofit;
     public ApiService service;
-    private Button btn_get, btn_post, btn_delete, btn_update, kakao_login_button;
+    private Button btn_join, btn_post, btn_delete, btn_update, kakao_login_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         firstInit();
 
         btn_post.setOnClickListener(this);
+        btn_join.setOnClickListener(this);
 
         kakao_login_button.setOnClickListener(this);
 
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void firstInit() {
         btn_post = (Button) findViewById(R.id.btn_post);
+        btn_join = (Button) findViewById(R.id.btn_join);
 
         kakao_login_button = (Button) findViewById(R.id.login);
 
@@ -137,6 +139,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
                 }
             });
+        } else if (v.getId() == R.id.btn_join) {
+            Intent intent = new Intent(MainActivity.this, JoinActivity.class);
+            startActivity(intent);
         }
     }
 

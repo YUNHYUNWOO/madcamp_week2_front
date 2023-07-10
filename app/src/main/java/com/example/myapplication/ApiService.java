@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import com.kakao.sdk.user.model.User;
+
 import org.json.JSONObject;
 
 import okhttp3.ResponseBody;
@@ -14,6 +16,13 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
+    @GET("/")
+    Call<ResponseBody> sessionCheck();
+
+    @FormUrlEncoded
+    @POST("/auth/join")
+    Call<UserProfile> postUserProfile(@Field("userProfile") String userProfile);
+
     @GET("/main/getall")
     Call<PostContents> getAllPosts();
 

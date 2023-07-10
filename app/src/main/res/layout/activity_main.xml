@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="150dp"
     android:layout_marginTop="150dp"
     android:layout_marginStart="50dp"
     android:layout_marginEnd="50dp"
@@ -19,52 +18,69 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp">
 
-        <EditText
-            android:id="@+id/id_show"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:inputType="text"
-            android:hint="id"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="아이디"
+                android:textSize="15dp"
+                android:maxLines="1"
+                android:layout_weight="5"
+                android:ellipsize="end"/>
+
+            <EditText
+                android:id="@+id/id_show"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:inputType="text"
+                android:hint="id"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="비밀번호"
+                android:textSize="15dp"
+                android:maxLines="1"
+                android:layout_weight="5"
+                android:ellipsize="end"/>
 
         <EditText
             android:id="@+id/password_show"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginTop="30dp"
             android:inputType="text"
             android:hint="password"/>
+
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
             >
-            <Button
-                android:id="@+id/btn_get"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_join"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="GET"
-                app:layout_constraintBottom_toTopOf="@+id/btn_post"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
-
-            <Button
-                android:id="@+id/btn_update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="UPDATE"
-                app:layout_constraintBottom_toTopOf="@id/btn_delete"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_post" />
-
-            <Button
-                android:id="@+id/btn_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DELETE"
+                android:text="회원가입"
+                android:layout_gravity="end"
+                android:layout_marginBottom="20dp"
                 />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -73,6 +89,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:background="@drawable/login_button_drawable"
+                android:layout_marginBottom="10dp"
                 android:text="로그인"
                 android:textSize="17dp"/>
 
@@ -83,7 +100,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/kakao_login_button_drawable"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="30dp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

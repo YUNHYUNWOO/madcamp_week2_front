@@ -81,10 +81,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
      * Init
      */
     public void firstInit() {
-        btn_get = (Button) findViewById(R.id.btn_get);
-        btn_post = (Button) findViewById(R.id.btn_post);
-        btn_delete = (Button) findViewById(R.id.btn_delete);
-        btn_update = (Button) findViewById(R.id.btn_update);
 
 //        retrofit = new Retrofit.Builder()
 //                .baseUrl(URL)
