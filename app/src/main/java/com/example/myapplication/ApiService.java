@@ -20,8 +20,16 @@ public interface ApiService {
     Call<ResponseBody> sessionCheck();
 
     @FormUrlEncoded
+    @POST("/auth/dup_id")
+    Call<Boolean> duplicateIdCheck(@Field("data") String username);
+
+    @FormUrlEncoded
+    @POST("/auth/dup_nickname")
+    Call<Boolean> duplicateNicknameCheck(@Field("data") String nickname);
+
+    @FormUrlEncoded
     @POST("/auth/join")
-    Call<UserProfile> postUserProfile(@Field("userProfile") String userProfile);
+    Call<Boolean> postUserProfile(@Field("data") String userProfile);
 
     @GET("/main/getall")
     Call<PostContents> getAllPosts();

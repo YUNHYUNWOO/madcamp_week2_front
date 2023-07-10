@@ -47,12 +47,28 @@
                             android:maxLines="1"
                             android:layout_weight="5"
                             android:ellipsize="end"/>
-                        <EditText
-                            android:id="@+id/join_id_show"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:inputType="text"
-                            android:hint="id"/>
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal">
+                            <EditText
+                                android:id="@+id/join_id_show"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:inputType="text"
+                                android:layout_weight="4"
+                                android:hint="id"/>
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/duplicate_id_check"
+                                android:layout_width="0dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/login_button_drawable"
+                                android:layout_weight="1"
+                                android:text="중복체크"
+                                android:textSize="13dp"/>
+                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
@@ -119,12 +135,28 @@
                             android:maxLines="1"
                             android:layout_weight="5"
                             android:ellipsize="end"/>
-                        <EditText
-                            android:id="@+id/join_nickname"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:inputType="text"
-                            android:hint="nickname"/>
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal">
+                            <EditText
+                                android:id="@+id/join_nickname"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:inputType="text"
+                                android:layout_weight="4"
+                                android:hint="id"/>
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/duplicate_nickname_check"
+                                android:layout_width="0dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/login_button_drawable"
+                                android:layout_weight="1"
+                                android:text="중복체크"
+                                android:textSize="13dp"/>
+                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
