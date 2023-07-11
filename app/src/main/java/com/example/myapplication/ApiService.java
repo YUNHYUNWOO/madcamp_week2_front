@@ -3,6 +3,7 @@ package com.example.myapplication;
 import com.kakao.sdk.user.model.User;
 
 import org.json.JSONObject;
+import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +26,12 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("/auth/dup_id")
     Call<Boolean> duplicateIdCheck(@Field("username") String username);
-
     @FormUrlEncoded
     @POST("/auth/dup_nickname")
     Call<Boolean> duplicateNicknameCheck(@Field("nickname") String nickname);
-
     @FormUrlEncoded
     @POST("/auth/join")
     Call<String> join(@Field("data") String userProfile);
-
     @FormUrlEncoded
     @POST("/auth/login")
     Call<String> postFunc(@Field("data") String data);
@@ -52,12 +50,17 @@ public interface ApiService {
     Call<ArrayList<PostContents>> getAllPosts();
     @FormUrlEncoded
     @POST("/main/post")
-    Call<Boolean> postPost(@Field("post") String postContents);
+    Call<Boolean> postPost(@Field("data") String postContents);
+    @FormUrlEncoded
+    @POST("/main/read_comment")
+    Call<ArrayList<PostComment>> readComments(@Field("data") int postId);
+    @FormUrlEncoded
+    @POST("/main/write_comment")
+    Call<Boolean> writeComments(@Field("data") String comment);
 
     @FormUrlEncoded
     @PUT("/login/put/{id}")
     Call<ResponseBody> putFunc(@Path("id") String id, @Field("data") String data);
-
     @DELETE("/login/delete/{id}")
     Call<ResponseBody> deleteFunc(@Path("id") String id);
 }

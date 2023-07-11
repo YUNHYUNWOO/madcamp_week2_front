@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +42,8 @@ public class BoardMainFragment extends Fragment {
     ArrayList<PostContents> postList = new ArrayList<>(0);
     private Retrofit retrofit;
     private ApiService service;
+
+    private FloatingActionButton new_post_btn;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -50,6 +55,8 @@ public class BoardMainFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.board_main_page, container, false);
 
         Toolbar toolbar = rootView.findViewById(R.id.board_main_toolbar);
+
+        new_post_btn = rootView.findViewById(R.id.add_post_button);
 
         initUI(rootView);
 
@@ -92,22 +99,11 @@ public class BoardMainFragment extends Fragment {
             public void onResponse(Call<ArrayList<PostContents>> call, Response<ArrayList<PostContents>> response) {
                 if (response.isSuccessful()) {
                     ArrayList<PostContents> postContentsDataSet = response.body();
-                    Log.v("TAG", postContentsDataSet.get(0).getTitle());
+                    Log.v("TAG", postContentsDataSet.get(0).getUploadTime());
 
                     postList = postContentsDataSet;
                     postAdapter.setList(postList);
                     postAdapter.notifyDataSetChanged();
-
-//                    for(PostContents item : postContentsDataSet){
-//                        postList.add(new PostContents(item.getId(),
-//                                                      item.getTitle(),
-//                                                      item.getContents(),
-//                                                      item.getLike(),
-//                                                      item.getWriter(),
-//                                                      item.getPostImage(),
-//                                                      item.getUploadTime(),
-//                                                      item.getHits()));
-//                    }
 
                     Log.v("TAG", "성공");
                     Toast.makeText(getContext(), "성공", Toast.LENGTH_SHORT).show();
@@ -130,6 +126,14 @@ public class BoardMainFragment extends Fragment {
             @Override
             public void onItemClicked(int position, String data) {
                 Intent intent = new Intent(getContext(), PostInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        new_post_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), PostAddActivity.class);
                 startActivity(intent);
             }
         });

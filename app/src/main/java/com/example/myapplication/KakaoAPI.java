@@ -14,5 +14,5 @@ import retrofit2.http.Query;
 
 public interface KakaoAPI {
     @GET("v2/local/search/keyword.json")
-    Call<ResultSearchKeyword> getSearchKeyword(@Header("Authorization") String key, @Query("query") String query);
+    Call<ResultSearchKeyword> getSearchKeyword(@Header("Authorization") String key, @Query("query") String query, @Query("x") String longitude, @Query("y") String latitude);
 }

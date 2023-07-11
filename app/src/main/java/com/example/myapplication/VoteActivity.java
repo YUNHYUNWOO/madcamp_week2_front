@@ -56,7 +56,10 @@ public class VoteActivity extends AppCompatActivity implements View.OnClickListe
 
             TextView resultTextView = findViewById(R.id.dummy_text);
 
-            Call<ResultSearchKeyword> call_get = service.getSearchKeyword(API_KEY, searchKeyword);
+            String x = "36.35283473";
+            String y = "127.38550344";
+
+            Call<ResultSearchKeyword> call_get = service.getSearchKeyword(API_KEY, searchKeyword, x, y);
             call_get.enqueue(new Callback<ResultSearchKeyword>() {
                 @Override
                 public void onResponse(Call<ResultSearchKeyword> call, Response<ResultSearchKeyword> response) {

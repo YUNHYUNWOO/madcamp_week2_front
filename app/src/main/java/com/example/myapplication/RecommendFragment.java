@@ -89,7 +89,7 @@ public class RecommendFragment extends Fragment {
                 if (response.isSuccessful()) {
 
                     Log.v("TAG", "result = ");
-                    Toast.makeText(getContext(), "살려줘", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "살려줘", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.v("TAG", "error = " + String.valueOf(response.code()));
                     Toast.makeText(getContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();

@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/post_toolbar"
+        android:id="@+id/add_new_post_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFDD00"/>

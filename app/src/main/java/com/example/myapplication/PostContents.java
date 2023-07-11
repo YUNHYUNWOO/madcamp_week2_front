@@ -1,7 +1,7 @@
 package com.example.myapplication;
 
 public class PostContents {
-    private String id;
+    private int id;
     private String title;
     private String contents;
     private int like;
@@ -11,7 +11,7 @@ public class PostContents {
     private String uploadTime;
     private int hits;
 
-    public PostContents(String id,
+    public PostContents(int id,
                         String title,
                         String contents,
                         int like,
@@ -32,15 +32,15 @@ public class PostContents {
     public boolean equals(Object obj){
         if (obj instanceof PostContents) {
             PostContents p = (PostContents) obj;
-            return p.getId().equals(this.id);
+            return p.getId()== this.id;
         }
         return false;
     }
 
-    public String getId(){
+    public int getId(){
         return id;
     }
-    public void setId(String _id){
+    public void setId(int _id){
         id = _id;
     }
     public String getTitle(){

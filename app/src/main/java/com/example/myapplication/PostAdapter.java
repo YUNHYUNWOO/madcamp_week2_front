@@ -71,8 +71,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
-        String id = postContentsArrayList.get(position).getId();
-        holder.idTextView.setText(id);
+        int id = postContentsArrayList.get(position).getId();
+        String id_str = "" + id;
+        holder.idTextView.setText(id_str);
         String write_time = postContentsArrayList.get(position).getUploadTime();
         holder.writeTimeTextView.setText(write_time);
         int hits = postContentsArrayList.get(position).getHits();
@@ -81,10 +82,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         String title = postContentsArrayList.get(position).getTitle();
         holder.titleTextView.setText(title);
         String writer = postContentsArrayList.get(position).getWriter();
-        holder.titleTextView.setText(writer);
+        holder.writerTextView.setText(writer);
         int like_num = postContentsArrayList.get(position).getLike();
         String like_numStr = "" + like_num;
-        holder.titleTextView.setText(like_numStr);
+        holder.likeNumTextView.setText(like_numStr);
 
         String contents = postContentsArrayList.get(position).getContents();
 
