@@ -4,6 +4,9 @@ import com.kakao.sdk.user.model.User;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
@@ -35,8 +38,11 @@ public interface ApiService {
     @POST("/profile")
     Call<UserProfile> getUserProfile(@Field("nickname") String nickname);
 
-    @GET("/main/getall")
-    Call<PostContents> getAllPosts();
+    @GET("/main")
+    Call<ArrayList<PostContents>> getAllPosts();
+    @FormUrlEncoded
+    @POST("/main/post")
+    Call<Boolean> postPost(@Field("post") String postContents);
 
     @FormUrlEncoded
     @POST("/auth/login")

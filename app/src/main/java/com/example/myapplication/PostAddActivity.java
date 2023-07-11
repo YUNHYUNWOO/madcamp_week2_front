@@ -2,20 +2,20 @@ package com.example.myapplication;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.navigation.NavigationBarView;
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,45 +23,56 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class VoteActivity extends AppCompatActivity implements View.OnClickListener {
-    private final String TAG = "VoteActivityLog";
-    private final String URL = "https://dapi.kakao.com/";
-    private String API_KEY = "KakaoAK " + MainActivity.RESTAPI_KEY;
-
+public class PostAddActivity extends AppCompatActivity implements View.OnClickListener {
+    private final String TAG = "PostAddActivityLog";
     private Retrofit retrofit;
-    private KakaoAPI service;
-
+    private ApiService service;
     private Button search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dummy_layout);
+        setContentView(R.layout.post_new);
 
-        search = (Button) findViewById(R.id.search_btn);
+        search = (Button) findViewById(R.id.new_post_button);
         search.setOnClickListener(this);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(MainActivity.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        service = retrofit.create(KakaoAPI.class);
+        service = retrofit.create(ApiService.class);
     }
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.search_btn) {
-            EditText searchEditText = findViewById(R.id.dummy_search);
-            String searchKeyword = searchEditText.getText().toString();
+        if(v.getId() == R.id.new_post_button) {
+            EditText newPostTitleEditText = findViewById(R.id.new_post_title);
+            EditText newPostContentsEditText = findViewById(R.id.new_post_contents);
 
-            TextView resultTextView = findViewById(R.id.dummy_text);
+            String newPostTitle = newPostTitleEditText.getText().toString();
+            String newPostContents = newPostContentsEditText.getText().toString();
+            String newPostWriter = MainActivity.nickname;
 
-            Call<ResultSearchKeyword> call_get = service.getSearchKeyword(API_KEY, searchKeyword);
-            call_get.enqueue(new Callback<ResultSearchKeyword>() {
+            Date nowDate = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
+            String newPostUploadTime = sdf.format(nowDate);
+
+            JSONObject postInfo = new JSONObject();
+            try {
+                postInfo.put("title", newPostTitle);
+                postInfo.put("contents", newPostContents);
+                postInfo.put("writer", newPostWriter);
+                postInfo.put("uploadtime", newPostUploadTime);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+            Call<Boolean> call_get = service.postPost(postInfo.toString());
+            call_get.enqueue(new Callback<Boolean>() {
                 @Override
-                public void onResponse(Call<ResultSearchKeyword> call, Response<ResultSearchKeyword> response) {
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful()) {
-                        resultTextView.setText(response.body().documents.toString());
                         Log.v(TAG, "성공");
                         Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
                     } else {
@@ -70,7 +81,7 @@ public class VoteActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
                 @Override
-                public void onFailure(Call<ResultSearchKeyword> call, Throwable t) {
+                public void onFailure(Call<Boolean> call, Throwable t) {
                     Log.v(TAG, "Fail");
                     Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
                 }

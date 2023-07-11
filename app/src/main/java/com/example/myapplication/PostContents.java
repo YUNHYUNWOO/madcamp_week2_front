@@ -5,10 +5,7 @@ public class PostContents {
     private String title;
     private String contents;
     private int like;
-
     private String writer;
-    private String writerName;
-
     private String postImage;
 
     private String uploadTime;
@@ -19,7 +16,6 @@ public class PostContents {
                         String contents,
                         int like,
                         String writer,
-                        String writerName,
                         String postImage,
                         String uploadTime,
                         int hits){
@@ -28,7 +24,6 @@ public class PostContents {
         this.contents = contents;
         this.like = like;
         this.writer = writer;
-        this.writerName = writerName;
         this.postImage = postImage;
         this.uploadTime = uploadTime;
         this.hits = hits;

@@ -27,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,7 +36,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BoardMainFragment extends Fragment {
-    ArrayList<PostContents> postContentsArrayList;
+    ArrayList<PostContents> postList = new ArrayList<>(0);
     private Retrofit retrofit;
     private ApiService service;
     @Override
@@ -50,13 +51,7 @@ public class BoardMainFragment extends Fragment {
 
         Toolbar toolbar = rootView.findViewById(R.id.board_main_toolbar);
 
-        try {
-            initUI(rootView);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        initUI(rootView);
 
         setHasOptionsMenu(true);
         return rootView;
@@ -77,70 +72,67 @@ public class BoardMainFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initUI(ViewGroup rootView) throws IOException, JSONException {
-        ArrayList<PostContents> postContentsDataSet = new ArrayList<>();
-
+    private void initUI(ViewGroup rootView) {
         retrofit = new Retrofit.Builder()
                 .baseUrl(MainActivity.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         service = retrofit.create(ApiService.class);
 
-        Call<PostContents> call_get = service.getAllPosts();
-        call_get.enqueue(new Callback<PostContents>() {
+        RecyclerView recyclerView = rootView.findViewById(R.id.board_recyclerView);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        PostAdapter postAdapter = new PostAdapter(postList);
+        recyclerView.setAdapter(postAdapter);
+
+        Call<ArrayList<PostContents>> call_get = service.getAllPosts();
+        call_get.enqueue(new Callback<ArrayList<PostContents>>() {
             @Override
-            public void onResponse(Call<PostContents> call, Response<PostContents> response) {
+            public void onResponse(Call<ArrayList<PostContents>> call, Response<ArrayList<PostContents>> response) {
                 if (response.isSuccessful()) {
-                    String title = response.body().getTitle();
-                    String contents = response.body().getContents();
-                    Log.v("TAG", "result = " + title + contents);
-                    Toast.makeText(getContext(), title + contents, Toast.LENGTH_SHORT).show();
+                    ArrayList<PostContents> postContentsDataSet = response.body();
+                    Log.v("TAG", postContentsDataSet.get(0).getTitle());
+
+                    postList = postContentsDataSet;
+                    postAdapter.setList(postList);
+                    postAdapter.notifyDataSetChanged();
+
+//                    for(PostContents item : postContentsDataSet){
+//                        postList.add(new PostContents(item.getId(),
+//                                                      item.getTitle(),
+//                                                      item.getContents(),
+//                                                      item.getLike(),
+//                                                      item.getWriter(),
+//                                                      item.getPostImage(),
+//                                                      item.getUploadTime(),
+//                                                      item.getHits()));
+//                    }
+
+                    Log.v("TAG", "성공");
+                    Toast.makeText(getContext(), "성공", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.v("TAG", "error = " + String.valueOf(response.code()));
                     Toast.makeText(getContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
-            public void onFailure(Call<PostContents> call, Throwable t) {
+            public void onFailure(Call<ArrayList<PostContents>> call, Throwable t) {
                 Log.v("TAG", "Fail");
                 Toast.makeText(getContext(), "Response Fail", Toast.LENGTH_SHORT).show();
             }
         });
 
-        StringBuffer buffer = new StringBuffer();
 
-        String jsonData = buffer.toString();
 
-//        JSONArray jsonArray = new JSONArray(jsonData);
-//
-//        for (int i = 0; i < jsonArray.length(); i++) {
-//            JSONObject jo = jsonArray.getJSONObject(i);
-//            String name = jo.getString("Name");
-//            String phone = jo.getString("tel");
-//            String email_address = jo.getString("email");
-//            String image_path = jo.getString("pic");
-//            nameDataSet.add(name);
-//            telDataSet.add(phone);
-//            emailDataSet.add(email_address);
-//            galleryDataSet.add(image_path);
-//        }
-////        Toast.makeText(getActivity(), "" + nameDataSet.size(), Toast.LENGTH_SHORT).show();
-//
-//        RecyclerView recyclerView = rootView.findViewById(R.id.recyclerView);
-//
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        recyclerView.setLayoutManager(layoutManager);
-//
-//        CustomAdapter customAdapter = new CustomAdapter(nameDataSet, telDataSet, emailDataSet, galleryDataSet);
-//
-//        //click event implementation
-//        customAdapter.setOnItemclickListener(new CustomAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClicked(int position, String data) {
-//                Intent intent = new Intent(getContext(), ContactsActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        recyclerView.setAdapter(customAdapter);
+        //click event implementation
+        postAdapter.setOnItemclickListener(new PostAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClicked(int position, String data) {
+                Intent intent = new Intent(getContext(), PostInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

@@ -30,7 +30,7 @@ public class RecommendFragment extends Fragment {
     ArrayList<PostContents> postContentsArrayList;
     private Retrofit retrofit;
     private ApiService service;
-    private String URL = "https://6102-192-249-19-234.ngrok-free.app";
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -77,27 +77,26 @@ public class RecommendFragment extends Fragment {
         ArrayList<String> galleryDataSet = new ArrayList<>();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(MainActivity.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         service = retrofit.create(ApiService.class);
 
-        Call<PostContents> call_get = service.getAllPosts();
-        call_get.enqueue(new Callback<PostContents>() {
+        Call<ArrayList<PostContents>> call_get = service.getAllPosts();
+        call_get.enqueue(new Callback<ArrayList<PostContents>>() {
             @Override
-            public void onResponse(Call<PostContents> call, Response<PostContents> response) {
+            public void onResponse(Call<ArrayList<PostContents>> call, Response<ArrayList<PostContents>> response) {
                 if (response.isSuccessful()) {
-                    String title = response.body().getTitle();
-                    String contents = response.body().getContents();
-                    Log.v("TAG", "result = " + title + contents);
-                    Toast.makeText(getContext(), title + contents, Toast.LENGTH_SHORT).show();
+
+                    Log.v("TAG", "result = ");
+                    Toast.makeText(getContext(), "살려줘", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.v("TAG", "error = " + String.valueOf(response.code()));
                     Toast.makeText(getContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
-            public void onFailure(Call<PostContents> call, Throwable t) {
+            public void onFailure(Call<ArrayList<PostContents>> call, Throwable t) {
                 Log.v("TAG", "Fail");
                 Toast.makeText(getContext(), "Response Fail", Toast.LENGTH_SHORT).show();
             }

@@ -20,6 +20,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
     private ArrayList<PostContents> postContentsArrayList;
 
+    public void setOnItemclickListener(PostAdapter.OnItemClickListener onItemClickListener) {
+        itemClickListener = onItemClickListener;
+    }
+
     //click event implementation
     //OnItemClickListener 인터페이스 선언
     public interface OnItemClickListener {
@@ -49,7 +53,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             titleTextView = itemView.findViewById(R.id.title_textview);
             writerTextView = itemView.findViewById(R.id.writer);
             likeNumTextView = itemView.findViewById(R.id.like_num);
-            board_recyclerview = itemView.findViewById(R.id.board_recyclerview);
+            board_recyclerview = itemView.findViewById(R.id.board_recyclerview_item);
         }
     }
     public PostAdapter (ArrayList<PostContents> PostContentsSet) {
@@ -107,6 +111,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        return postContentsArrayList.size();
+        if (postContentsArrayList != null) {
+            return postContentsArrayList.size();
+        }
+        else return 0;
+    }
+    public void setList(ArrayList<PostContents> newList){
+        postContentsArrayList = newList;
     }
 }

@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private View loginButton, logoutButton;
     private TextView nickName;
     private ImageView profileImage;
-    public static String URL = " https://6102-192-249-19-234.ngrok-free.app";
-    public static String NATIVEKEY = "";
-    public static String RESTAPIKEY = "";
+    public static String URL = "https://56d7-192-249-19-234.ngrok-free.app";
+    public static String NATIVE_KEY = "";
+    public static String RESTAPI_KEY = "";
 
     public static String nickname;
 
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        KakaoSdk.init(this,NATIVEKEY);
+        KakaoSdk.init(this,NATIVE_KEY);
 
         firstInit();
 
