@@ -186,10 +186,10 @@ public class KakaoJoinActivity extends AppCompatActivity implements View.OnClick
                 throw new RuntimeException(e);
             }
             Log.d("User Profile", userProfile.toString());
-            Call<ResponseBody> call_userProfile = service.kakaoJoin(userProfile.toString());
-            call_userProfile.enqueue(new Callback<ResponseBody>() {
+            Call<String> call_userProfile = service.kakaoJoin(userProfile.toString());
+            call_userProfile.enqueue(new Callback<String>() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(Call<String> call, Response<String> response) {
                     if (response.isSuccessful()) {
 
                         Toast.makeText(getApplicationContext(), "ㅎㅇ", Toast.LENGTH_SHORT).show();
@@ -204,7 +204,7 @@ public class KakaoJoinActivity extends AppCompatActivity implements View.OnClick
                     }
                 }
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                public void onFailure(Call<String> call, Throwable t) {
                     Log.v(TAG, "Fail");
                     Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
                 }

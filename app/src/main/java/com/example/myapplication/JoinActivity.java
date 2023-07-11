@@ -205,10 +205,10 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            Call<ResponseBody> call_userProfile = service.kakaoJoin(userProfile.toString());
-            call_userProfile.enqueue(new Callback<ResponseBody>() {
+            Call<String> call_userProfile = service.join(userProfile.toString());
+            call_userProfile.enqueue(new Callback<String>() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(Call<String> call, Response<String> response) {
                     if (response.isSuccessful()) {
                         Log.v(TAG, "result = " + username + password);
                         Toast.makeText(getApplicationContext(), "ㅎㅇ", Toast.LENGTH_SHORT).show();
@@ -220,7 +220,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                public void onFailure(Call<String> call, Throwable t) {
                     Log.v(TAG, "Fail");
                     Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
                 }

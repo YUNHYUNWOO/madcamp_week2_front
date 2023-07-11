@@ -97,13 +97,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            Call<ResponseBody> call_get = service.postFunc(userInfo.toString());
-            call_get.enqueue(new Callback<ResponseBody>() {
+            Call<String> call_get = service.postFunc(userInfo.toString());
+            call_get.enqueue(new Callback<String>() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(Call<String> call, Response<String> response) {
                     if (response.isSuccessful()) {
                         String result = response.body().toString();
-                        nickname = "착한성원";
+                        nickname = response.body().toString();
                         Log.v(TAG, "result = " + nickname);
                         Toast.makeText(getApplicationContext(), nickname, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, PostActivity.class);
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                public void onFailure(Call<String> call, Throwable t) {
                     Log.v(TAG, "Fail");
                     Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
                 }
@@ -163,13 +163,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 System.out.println("로그인 완료");
 
-                Call<ResponseBody> call_get = service.kakaoUserCheck(user.getId().toString());
-                call_get.enqueue(new Callback<ResponseBody>(){
+                Call<String> call_get = service.kakaoUserCheck(user.getId().toString());
+                call_get.enqueue(new Callback<String>(){
 
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(Call<String> call, Response<String> response) {
                     if (response.isSuccessful()) {
 
-                        MainActivity.nickname = response.body().toString();
+                        nickname = response.body().toString();
 
                         Intent intent = new Intent(MainActivity.this, PostActivity.class);
                         startActivity(intent);
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                public void onFailure(Call<String> call, Throwable t) {
                     Log.v(TAG, "Fail");
                     Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
                 }
