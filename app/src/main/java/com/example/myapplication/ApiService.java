@@ -21,11 +21,11 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("/auth/dup_id")
-    Call<Boolean> duplicateIdCheck(@Field("data") String username);
+    Call<Boolean> duplicateIdCheck(@Field("username") String username);
 
     @FormUrlEncoded
     @POST("/auth/dup_nickname")
-    Call<Boolean> duplicateNicknameCheck(@Field("data") String nickname);
+    Call<Boolean> duplicateNicknameCheck(@Field("nickname") String nickname);
 
     @FormUrlEncoded
     @POST("/auth/join")
@@ -35,7 +35,7 @@ public interface ApiService {
     Call<PostContents> getAllPosts();
 
     @FormUrlEncoded
-    @POST("/login")
+    @POST("/auth/login")
     Call<ResponseBody> postFunc(@Field("data") String data);
 
     @FormUrlEncoded

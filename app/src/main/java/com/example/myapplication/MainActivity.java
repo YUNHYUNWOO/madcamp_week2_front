@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView profileImage;
 
 //    private final String URL = "http://172.10.5.180";
-    private final String URL = "https://3e00-192-249-19-234.ngrok-free.app";
+    private final String URL = "https://56d7-192-249-19-234.ngrok-free.app";
 
     public Retrofit retrofit;
     public ApiService service;
@@ -104,11 +104,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (v.getId() == R.id.btn_post){
             EditText idEditText = findViewById(R.id.id_show);
             EditText passwordEditText = findViewById(R.id.password_show);
-            String id = idEditText.getText().toString();
+            String username = idEditText.getText().toString();
             String password = passwordEditText.getText().toString();
             JSONObject userInfo = new JSONObject();
             try {
-                userInfo.put("id", id);
+                userInfo.put("username", username);
                 userInfo.put("password", password);
             } catch (JSONException e) {
                 throw new RuntimeException(e);

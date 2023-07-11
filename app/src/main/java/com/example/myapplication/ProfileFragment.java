@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import org.json.JSONException;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,8 +37,12 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.board_main_page, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.profile_fragment_layout, container, false);
         setHasOptionsMenu(true);
+
+        TextView profile_nickname = (TextView) rootView.findViewById(R.id.profile_nickname);
+        TextView profile_address = (TextView) rootView.findViewById(R.id.profile_address);
+
         return rootView;
     }
 

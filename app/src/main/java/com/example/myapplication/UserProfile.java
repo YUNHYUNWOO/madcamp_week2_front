@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 public class UserProfile {
-    private int id;
     private String username;
     private String password;
     private String platform;
@@ -9,14 +8,12 @@ public class UserProfile {
     private String place;
     private String profile;
 
-    public UserProfile(int id,
-                       String username,
+    public UserProfile(String username,
                        String password,
                        String platform,
                        String nickname,
                        String place,
                        String profile){
-        this.id = id;
         this.username = username;
         this.password = password;
         this.platform = platform;
@@ -31,13 +28,6 @@ public class UserProfile {
             return p.getUsername().equals(this.username);
         }
         return false;
-    }
-
-    public int getId(){
-        return id;
-    }
-    public void setId(int id){
-        this.id = id;
     }
     public String getUsername(){
         return username;
