@@ -29,13 +29,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class JoinActivity extends AppCompatActivity implements View.OnClickListener {
+public class KakaoJoinActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "JoinActivityLog";
 
     private Retrofit retrofit;
     private ApiService service;
     private Button createAccount, dup_id, dup_nickname;
-    private EditText join_address;
+    private EditText join_address, usernameJoinEditText, nicknameJoinEditText,passwordJoinEditText, passwordCheckEditText, addressJoinEditText ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,17 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         createAccount = (Button) findViewById(R.id.join_add_user);
         dup_id = (Button) findViewById(R.id.duplicate_id_check);
         dup_nickname = (Button) findViewById(R.id.duplicate_nickname_check);
+
+        usernameJoinEditText = findViewById(R.id.join_id_show);
+        nicknameJoinEditText = findViewById(R.id.join_nickname);
+        passwordJoinEditText = findViewById(R.id.join_password);
+        passwordCheckEditText = findViewById(R.id.join_password_correction);
+        addressJoinEditText = findViewById(R.id.join_address);
+
+        passwordJoinEditText.setEnabled(false);
+        passwordCheckEditText.setEnabled(false);
+        dup_id.setEnabled(false);
+        usernameJoinEditText.setEnabled(false);
 
         join_address = (EditText) findViewById(R.id.join_address);
         join_address.setFocusable(false);
@@ -92,7 +104,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.duplicate_id_check){
-            EditText usernameJoinEditText = findViewById(R.id.join_id_show);
+
             String username = usernameJoinEditText.getText().toString();
             Call<Boolean> call_username = service.duplicateIdCheck(username);
             call_username.enqueue(new Callback<Boolean>() {
@@ -115,7 +127,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
         }else if(v.getId() == R.id.duplicate_nickname_check){
-            EditText nicknameJoinEditText = findViewById(R.id.join_nickname);
+
             String nickname = nicknameJoinEditText.getText().toString();
             Call<Boolean> call_username = service.duplicateNicknameCheck(nickname);
             call_username.enqueue(new Callback<Boolean>() {
@@ -138,47 +150,15 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
         } else if(v.getId() == R.id.join_add_user) {
-            EditText usernameJoinEditText = findViewById(R.id.join_id_show);
-            EditText passwordJoinEditText = findViewById(R.id.join_password);
-            EditText passwordCheckEditText = findViewById(R.id.join_password_correction);
-            EditText nicknameJoinEditText = findViewById(R.id.join_nickname);
-            EditText addressJoinEditText = findViewById(R.id.join_address);
 
-            String username = usernameJoinEditText.getText().toString();
-            String password = passwordJoinEditText.getText().toString();
-            String password_correction = passwordCheckEditText.getText().toString();
+
+
             String nickname = nicknameJoinEditText.getText().toString();
             String address = addressJoinEditText.getText().toString();
-            String platform = "local";
+            String platform = "kakao";
             String profile = "";
 
-            if (username.length() == 0){
-                Toast.makeText(getApplicationContext(), "아이디를 입력하세요", Toast.LENGTH_SHORT).show();
-                usernameJoinEditText.requestFocus();
-                return;
-            }
-            if (dup_id.isEnabled()){
-                Toast.makeText(getApplicationContext(), "아이디 중복체크하세요", Toast.LENGTH_SHORT).show();
-                usernameJoinEditText.requestFocus();
-                return;
-            }
-            if (password.length() == 0){
-                Toast.makeText(getApplicationContext(), "비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
-                passwordJoinEditText.requestFocus();
-                return;
-            }
-            if (password_correction.length() == 0){
-                Toast.makeText(getApplicationContext(), "비밀번호 확인을 입력하세요", Toast.LENGTH_SHORT).show();
-                passwordCheckEditText.requestFocus();
-                return;
-            }
-            if (!password.equals(password_correction)){
-                Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
-                passwordJoinEditText.setText("");
-                passwordCheckEditText.setText("");
-                passwordJoinEditText.requestFocus();
-                return;
-            }
+
             if (nickname.length() == 0){
                 Toast.makeText(getApplicationContext(), "별명을 입력하세요", Toast.LENGTH_SHORT).show();
                 nicknameJoinEditText.requestFocus();
@@ -196,24 +176,28 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
 
             JSONObject userProfile = new JSONObject();
             try {
-                userProfile.put("username", username);
-                userProfile.put("password", password);
+                userProfile.put("username", getIntent().getStringExtra("username"));
+                userProfile.put("password", "");
                 userProfile.put("nickname", nickname);
-                userProfile.put("address", address);
+                userProfile.put("place", address);
                 userProfile.put("platform", platform);
                 userProfile.put("profile", profile);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
+            Log.d("User Profile", userProfile.toString());
             Call<ResponseBody> call_userProfile = service.kakaoJoin(userProfile.toString());
             call_userProfile.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        Log.v(TAG, "result = " + username + password);
+
                         Toast.makeText(getApplicationContext(), "ㅎㅇ", Toast.LENGTH_SHORT).show();
 
+
                         MainActivity.nickname = response.body().toString();
+                        Intent intent = new Intent(KakaoJoinActivity.this, PostActivity.class);
+                        startActivity(intent);
                     } else {
                         Log.v(TAG, "error = " + String.valueOf(response.code()));
                         Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();

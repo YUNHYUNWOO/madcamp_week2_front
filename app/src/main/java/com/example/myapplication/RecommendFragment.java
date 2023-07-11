@@ -30,7 +30,7 @@ public class RecommendFragment extends Fragment {
     ArrayList<PostContents> postContentsArrayList;
     private Retrofit retrofit;
     private ApiService service;
-    private String URL = "https://9272-192-249-19-234.ngrok-free.app";
+    private String URL = "https://6102-192-249-19-234.ngrok-free.app";
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

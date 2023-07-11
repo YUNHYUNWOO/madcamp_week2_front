@@ -38,6 +38,7 @@
         </activity>
         <activity android:name=".PostActivity" />
         <activity android:name=".JoinActivity"/>
+        <activity android:name=".KakaoJoinActivity"/>
         <activity android:name=".AddressApiActivity"/>
     </application>
 </manifest>

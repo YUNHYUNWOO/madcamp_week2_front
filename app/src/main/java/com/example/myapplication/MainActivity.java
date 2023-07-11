@@ -30,6 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -37,7 +38,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private View loginButton, logoutButton;
     private TextView nickName;
     private ImageView profileImage;
-    public static String URL = "https://56d7-192-249-19-234.ngrok-free.app";
+    public static String URL = " https://6102-192-249-19-234.ngrok-free.app";
+    public static String NATIVEKEY = "";
+    public static String RESTAPIKEY = "";
 
     public static String nickname;
 
@@ -50,34 +53,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        KakaoSdk.init(this,"");
+        KakaoSdk.init(this,NATIVEKEY);
 
         firstInit();
 
         btn_post.setOnClickListener(this);
         btn_join.setOnClickListener(this);
-
         kakao_login_button.setOnClickListener(this);
 
-
-        Function2<OAuthToken,Throwable, Unit> callback =new Function2<OAuthToken, Throwable, Unit>() {
-            @Override
-            // 콜백 메서드 ,
-            public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
-                Log.e(TAG,"CallBack Method");
-                //oAuthToken != null 이라면 로그인 성공
-                if(oAuthToken!=null){
-                    // 토큰이 전달된다면 로그인이 성공한 것이고 토큰이 전달되지 않으면 로그인 실패한다.
-                    Log.d("Success", "!");
-
-                }else {
-                    //로그인 실패
-                    Log.e(TAG, "invoke: login fail" );
-                }
-
-                return null;
-            }
-        };
     }
 
     public void firstInit() {
@@ -88,13 +71,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
         service = retrofit.create(ApiService.class);
     }
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.login){
+            Log.d("fdsf0", "SDfsdf");
             if(UserApiClient.getInstance().isKakaoTalkLoginAvailable(MainActivity.this)){
                 login();
             }
@@ -178,14 +162,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e(TAG, "사용자 정보 요청 실패", meError);
             } else {
                 System.out.println("로그인 완료");
-                Log.i(TAG, user.toString());
-                {
-                    Log.i(TAG, "사용자 정보 요청 성공" +
-                            "\n회원번호: "+user.getId() +
-                            "\n이메일: "+user.getKakaoAccount().getEmail());
+
+                Call<ResponseBody> call_get = service.kakaoUserCheck(user.getId().toString());
+                call_get.enqueue(new Callback<ResponseBody>(){
+
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+
+                        MainActivity.nickname = response.body().toString();
+
+                        Intent intent = new Intent(MainActivity.this, PostActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Log.v(TAG, "error = " + String.valueOf(response.code()));
+                        Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(MainActivity.this, KakaoJoinActivity.class);
+                        intent.putExtra("username", user.getId().toString());
+                        startActivity(intent);
+
+                    }
                 }
-                Account user1 = user.getKakaoAccount();
-                System.out.println("사용자 계정" + user1);
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.v(TAG, "Fail");
+                    Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
+                }
+            });
             }
             return null;
         });

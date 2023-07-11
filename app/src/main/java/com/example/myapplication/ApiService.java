@@ -29,7 +29,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("/auth/join")
-    Call<Boolean> postUserProfile(@Field("data") String userProfile);
+    Call<ResponseBody> join(@Field("data") String userProfile);
 
     @FormUrlEncoded
     @POST("/profile")
@@ -41,6 +41,12 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("/auth/login")
     Call<ResponseBody> postFunc(@Field("data") String data);
+    @FormUrlEncoded
+    @POST("auth/kakao")
+    Call<ResponseBody> kakaoUserCheck(@Field("data") String data);
+    @FormUrlEncoded
+    @POST("/auth/kakaojoin")
+    Call<ResponseBody> kakaoJoin(@Field("data") String data);
 
     @FormUrlEncoded
     @PUT("/login/put/{id}")

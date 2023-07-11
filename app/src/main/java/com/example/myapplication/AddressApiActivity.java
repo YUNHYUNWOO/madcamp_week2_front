@@ -43,6 +43,6 @@ public class AddressApiActivity extends AppCompatActivity {
                 webView.loadUrl("javascript:sample2_execDaumPostcode();");
             }
         });
-        webView.loadUrl("https://3e00-192-249-19-234.ngrok-free.app/address");
+        webView.loadUrl(MainActivity.URL + "/address");
     }
 }

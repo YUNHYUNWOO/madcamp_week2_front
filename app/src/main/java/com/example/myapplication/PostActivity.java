@@ -27,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "MainActivityLog";
-    private final String URL = "http://172.10.5.180";
+    private final String URL = "https://025b-192-249-19-234.ngrok-free.app";
 
     private Retrofit retrofit;
     private ApiService service;

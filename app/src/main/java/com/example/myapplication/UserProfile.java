@@ -7,6 +7,7 @@ public class UserProfile {
     private String nickname;
     private String place;
     private String profile;
+    public static UserProfile userInfo;
 
     public UserProfile(String username,
                        String password,
