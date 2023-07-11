@@ -31,6 +31,10 @@ public interface ApiService {
     @POST("/auth/join")
     Call<Boolean> postUserProfile(@Field("data") String userProfile);
 
+    @FormUrlEncoded
+    @POST("/profile")
+    Call<UserProfile> getUserProfile(@Field("nickname") String nickname);
+
     @GET("/main/getall")
     Call<PostContents> getAllPosts();
 

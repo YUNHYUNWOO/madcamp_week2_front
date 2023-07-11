@@ -38,7 +38,6 @@ public class BoardMainFragment extends Fragment {
     ArrayList<PostContents> postContentsArrayList;
     private Retrofit retrofit;
     private ApiService service;
-    private String URL = "https://56d7-192-249-19-234.ngrok-free.app";
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -82,7 +81,7 @@ public class BoardMainFragment extends Fragment {
         ArrayList<PostContents> postContentsDataSet = new ArrayList<>();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(MainActivity.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         service = retrofit.create(ApiService.class);

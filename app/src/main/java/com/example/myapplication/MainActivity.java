@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private View loginButton, logoutButton;
     private TextView nickName;
     private ImageView profileImage;
+    public static String URL = "https://56d7-192-249-19-234.ngrok-free.app";
 
-//    private final String URL = "http://172.10.5.180";
-    private final String URL = "https://56d7-192-249-19-234.ngrok-free.app";
+    public static String nickname;
 
     public Retrofit retrofit;
     public ApiService service;
@@ -118,15 +118,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        try {
-                            String result = response.body().string();
-                            Log.v(TAG, "result = " + result);
-                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(MainActivity.this, PostActivity.class);
-                            startActivity(intent);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        String result = response.body().toString();
+                        nickname = "착한성원";
+                        Log.v(TAG, "result = " + nickname);
+                        Toast.makeText(getApplicationContext(), nickname, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, PostActivity.class);
+                        startActivity(intent);
                     } else {
                         Log.v(TAG, "error = " + String.valueOf(response.code()));
                         Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();

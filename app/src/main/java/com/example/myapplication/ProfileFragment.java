@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,9 +30,16 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProfileFragment extends Fragment {
+    private final String TAG = "ProfileFragmentLog";
+
+    private Retrofit retrofit;
+    private ApiService service;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
     }
 
     @Override
@@ -43,7 +51,49 @@ public class ProfileFragment extends Fragment {
         TextView profile_nickname = (TextView) rootView.findViewById(R.id.profile_nickname);
         TextView profile_address = (TextView) rootView.findViewById(R.id.profile_address);
 
+        try {
+            initProfile(rootView);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
         return rootView;
+    }
+
+    private void initProfile(ViewGroup rootView) throws IOException, JSONException {
+        ArrayList<PostContents> postContentsDataSet = new ArrayList<>();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(MainActivity.URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        service = retrofit.create(ApiService.class);
+
+        Call<UserProfile> call_getProfile = service.getUserProfile(MainActivity.nickname);
+        call_getProfile.enqueue(new Callback<UserProfile>() {
+            @Override
+            public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
+                if (response.isSuccessful()) {
+                    String nickname = response.body().getNickname();
+                    String address = response.body().getPlace();
+                    TextView profile_nickname = rootView.findViewById(R.id.profile_nickname);
+                    TextView profile_address = rootView.findViewById(R.id.profile_address);
+                    profile_nickname.setText(nickname);
+                    profile_address.setText(address);
+                    Log.v("TAG", "result = " + nickname + address);
+                } else {
+                    Log.v("TAG", "error = " + String.valueOf(response.code()));
+                    Toast.makeText(getContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<UserProfile> call, Throwable t) {
+                Log.v("TAG", "Fail");
+                Toast.makeText(getContext(), "Response Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

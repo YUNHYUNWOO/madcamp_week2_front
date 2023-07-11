@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class VoteActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "VoteActivityLog";
     private final String URL = "https://dapi.kakao.com/";
-    private String API_KEY = "KakaoAK ";
+    private String API_KEY = "KakaoAK 1af721d0bf655c006b4c50a196e077f5";
 
     private Retrofit retrofit;
     private KakaoAPI service;
