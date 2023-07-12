@@ -46,9 +46,6 @@ node.js와 MySQL을 이용하여 각 유저들의 정보를 db에 저장할 수 
 
 ## Tab1. 커뮤니티
 
-<img width="206" alt="Tab1" src="https://github.com/akmj4869/App/assets/57134776/3be3c543-c348-4707-a282-ab18ac2ef275">
-<img width="194" alt="Tab1-2" src="https://github.com/akmj4869/App/assets/57134776/c16891fb-704f-4c38-88d5-60dacb863a78">
-
 
 ### 주요 기능
 유저들이 제목과 내용, 날짜를 포함한 글을 적을 수 있는 게시판을 구현하였다.
@@ -60,10 +57,6 @@ node.js의 Body-parser와 함께 하여 서버에게 객체를 보내거나 객�
 게시판에 필요한 db 구조를 잡아 활용하였다.
 
 ## Tab2. 
-
-<img width="206" alt="Tab1" src="https://github.com/akmj4869/App/assets/57134776/3be3c543-c348-4707-a282-ab18ac2ef275">
-<img width="194" alt="Tab1-2" src="https://github.com/akmj4869/App/assets/57134776/c16891fb-704f-4c38-88d5-60dacb863a78">
-
 
 ### 주요 기능
 어플의 핵심기능인 투표가 가능하다. 한 유저가 투표를 올리기 위한 플로팅 버튼을 누룬다.
