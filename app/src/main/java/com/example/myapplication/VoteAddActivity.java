@@ -181,8 +181,9 @@ public class VoteAddActivity extends AppCompatActivity implements View.OnClickLi
             Date nowDate = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
             String uploadTime = sdf.format(nowDate);
+            Log.v("TAG", uploadTime);
 
-            VoteContents newVote = new VoteContents(0, title, contents, "dfsd", address, 0, "1", "1", uploadTime, 0);
+            VoteContents newVote = new VoteContents(0, title, contents, "dfsd", address, 0, MainActivity.nickname, "", uploadTime, 0);
 
             myService = myRetrofit.create(ApiService.class);
             retrofit2.Call<Integer> call_post = myService.makeNewVote(newVote);

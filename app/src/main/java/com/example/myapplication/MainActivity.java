@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private View loginButton, logoutButton;
     private TextView nickName;
     private ImageView profileImage;
-    public static String URL = "https://6102-192-249-19-234.ngrok-free.app";
+    public static String URL = "https://54ee-192-249-19-234.ngrok-free.app";
     public static String RESTAPI_URL = "https://dapi.kakao.com/";
     public static String NATIVE_KEY = "";
     public static String RESTAPI_KEY = "";
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String TAG = "login()";
         UserApiClient.getInstance().loginWithKakaoTalk(MainActivity.this,(oAuthToken, error) -> {
             if (error != null) {
-                Log.e(TAG, "로그인 실패", error);
+                Log.e(TAG, "로그인 실패0", error);
             } else if (oAuthToken != null) {
                 Log.i(TAG, "로그인 성공(토큰) : " + oAuthToken.getAccessToken());
                 getUserInfo();
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String TAG = "accountLogin()";
         UserApiClient.getInstance().loginWithKakaoAccount(MainActivity.this,(oAuthToken, error) -> {
             if (error != null) {
-                Log.e(TAG, "로그인 실패", error);
+                Log.e(TAG, "로그인 실패1", error);
             } else if (oAuthToken != null) {
                 Log.i(TAG, "로그인 성공(토큰) : " + oAuthToken.getAccessToken());
                 getUserInfo();
