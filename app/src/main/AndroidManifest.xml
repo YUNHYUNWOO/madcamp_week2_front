@@ -35,7 +35,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <!-- Redirect URI: "kakao<Kakao Native Key>" -->
-                <data android:host="oauth" android:scheme="" />
+                <data android:host="oauth" android:scheme="55ed3ea4a251121fe5c0f48de4705a06" />
             </intent-filter>
         </activity>
         <activity android:name=".PostActivity" />
@@ -46,5 +46,6 @@
         <activity android:name=".PostInfoActivity"/>
         <activity android:name=".VoteInfoActivity"/>
         <activity android:name=".VoteAddActivity"/>
+
     </application>
 </manifest>

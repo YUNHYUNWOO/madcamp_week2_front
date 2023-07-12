@@ -165,10 +165,11 @@ public class VoteAddActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
         else if(view.getId() == R.id.vote_home_ad){
-
         }
         else if(view.getId() == R.id.vote_category_choose){
 
+            CustomCategoryDialog alarm = new CustomCategoryDialog(VoteAddActivity.this, categoryView);
+            alarm.show();
         }
         else if(view.getId() == R.id.vote_post){
             String title = titleView.getText().toString();
@@ -176,12 +177,13 @@ public class VoteAddActivity extends AppCompatActivity implements View.OnClickLi
             String category = categoryView.getText().toString();
             String contents = contentView.getText().toString();
 
+
             Date nowDate = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
             String uploadTime = sdf.format(nowDate);
             Log.v("TAG", uploadTime);
 
-            VoteContents newVote = new VoteContents(0, title, contents, "dfsd", address, 0, MainActivity.nickname, "", uploadTime, 0);
+            VoteContents newVote = new VoteContents(0, title, contents, category, address, 0, MainActivity.nickname, "", uploadTime, 0);
 
             myService = myRetrofit.create(ApiService.class);
             retrofit2.Call<Integer> call_post = myService.makeNewVote(newVote);
@@ -200,7 +202,7 @@ public class VoteAddActivity extends AppCompatActivity implements View.OnClickLi
                                     String x = response.body().documents.get(0).x;
                                     String y = response.body().documents.get(0).y;
 
-                                    retrofit2.Call<ResultSearchKeyword> call_get = kakaoService.getSearchKeyword(API_KEY, "맛집", x, y);
+                                    retrofit2.Call<ResultSearchKeyword> call_get = kakaoService.getSearchKeyword(API_KEY, category, x, y);
                                     call_get.enqueue(new Callback<ResultSearchKeyword>() {
                                         @Override
                                         public void onResponse(retrofit2.Call<ResultSearchKeyword> call, Response<ResultSearchKeyword> response) {
