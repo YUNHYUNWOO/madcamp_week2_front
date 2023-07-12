@@ -98,11 +98,14 @@ public class VoteInfoActivity extends AppCompatActivity implements View.OnClickL
                             String road_address_name = i.getRoad_address_name();
                             String address_name = i.getAddress_name();
                             String phone = i.getPhone();
+                            int count = i.getCount();
+                            String countStr = count + "";
 
                             ((TextView) customView.findViewById(R.id.place_name)).setText(place_name);
                             ((TextView) customView.findViewById(R.id.road_address_name)).setText(road_address_name);
                             ((TextView) customView.findViewById(R.id.address_name)).setText(address_name);
                             ((TextView) customView.findViewById(R.id.phone)).setText(phone);
+                            ((TextView) customView.findViewById(R.id.vote_count)).setText(countStr);
 
                             vote_layout.addView(customView);
                         }

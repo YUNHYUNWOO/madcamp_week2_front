@@ -2,20 +2,31 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
+
 public class VoteAdapter extends RecyclerView.Adapter<VoteAdapter.ViewHolder>{
 
     private ArrayList<VoteContents> voteContentsArrayList;
+
+    public Retrofit retrofit;
+    public ApiService service;
 
     public void setOnItemclickListener(VoteAdapter.OnItemClickListener onItemClickListener) {
         itemClickListener = onItemClickListener;
@@ -54,6 +65,13 @@ public class VoteAdapter extends RecyclerView.Adapter<VoteAdapter.ViewHolder>{
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.vote_recyclerview_item, parent, false);
         VoteAdapter.ViewHolder viewHolder = new VoteAdapter.ViewHolder(view);
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(MainActivity.URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
+        service = retrofit.create(ApiService.class);
+
         return viewHolder;
     }
 
@@ -77,19 +95,44 @@ public class VoteAdapter extends RecyclerView.Adapter<VoteAdapter.ViewHolder>{
         holder.vote_recyclerview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Call<Boolean> call_vote = service.voteWriterVotes(MainActivity.nickname, id);
+                call_vote.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful()) {
+                            Context context = v.getContext();
 
-                Context context = v.getContext();
+                            Intent voteInfoActivity = new Intent(context, VoteInfoActivity.class);
 
-                Intent voteInfoActivity = new Intent(context, VoteInfoActivity.class);
+                            voteInfoActivity.putExtra("id", id);
+                            voteInfoActivity.putExtra("write_time", write_time);
+                            voteInfoActivity.putExtra("hits", hitsStr);
+                            voteInfoActivity.putExtra("title", title);
+                            voteInfoActivity.putExtra("writer", writer);
+                            voteInfoActivity.putExtra("contents", contents);
 
-                voteInfoActivity.putExtra("id", id);
-                voteInfoActivity.putExtra("write_time", write_time);
-                voteInfoActivity.putExtra("hits", hitsStr);
-                voteInfoActivity.putExtra("title", title);
-                voteInfoActivity.putExtra("writer", writer);
-                voteInfoActivity.putExtra("contents", contents);
+                            ((PostActivity)context).startActivity(voteInfoActivity);
+                        } else {
+                            Context context = v.getContext();
 
-                ((PostActivity)context).startActivity(voteInfoActivity);
+                            Intent voteInfoNotSelectActivity = new Intent(context, VoteInfoNotSelectActivity.class);
+
+                            voteInfoNotSelectActivity.putExtra("id", id);
+                            voteInfoNotSelectActivity.putExtra("write_time", write_time);
+                            voteInfoNotSelectActivity.putExtra("hits", hitsStr);
+                            voteInfoNotSelectActivity.putExtra("title", title);
+                            voteInfoNotSelectActivity.putExtra("writer", writer);
+                            voteInfoNotSelectActivity.putExtra("contents", contents);
+
+                            ((PostActivity)context).startActivity(voteInfoNotSelectActivity);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        Log.v("TAG", "Fail");
+                    }
+                });
             }
         });
     }

@@ -7,13 +7,18 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -28,13 +33,14 @@ public class VoteInfoNotSelectActivity extends AppCompatActivity implements View
     private Retrofit retrofit;
     private ApiService service;
     private LinearLayout vote_layout;
+    private RadioGroup radioGroup;
     private int vote_id;
     private Button reg_vote_comment_btn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vote_content);
+        setContentView(R.layout.vote_select_layout);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(MainActivity.URL)
@@ -42,20 +48,25 @@ public class VoteInfoNotSelectActivity extends AppCompatActivity implements View
                 .build();
         service = retrofit.create(ApiService.class);
 
-        Toolbar mToolbar = findViewById(R.id.vote_toolbar);
+        Toolbar mToolbar = findViewById(R.id.vote_select_toolbar);
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24);
 
-        TextView vote_category = (TextView) findViewById(R.id.vote_category_select) ;
-        TextView vote_title = (TextView) findViewById(R.id.vote_title);
-        TextView vote_writer = (TextView) findViewById(R.id.vote_writer);
-        TextView vote_content = (TextView) findViewById(R.id.vote_content);
-        TextView vote_date = (TextView) findViewById(R.id.vote_date);
+        TextView vote_category = (TextView) findViewById(R.id.vote_select_category_select) ;
+        TextView vote_title = (TextView) findViewById(R.id.vote_select_title);
+        TextView vote_writer = (TextView) findViewById(R.id.vote_select_writer);
+        TextView vote_content = (TextView) findViewById(R.id.vote_select_content);
+        TextView vote_date = (TextView) findViewById(R.id.vote_select_date);
 
-        vote_layout = findViewById(R.id.vote_comment_layout);
+        TextView vote_select_place = (TextView) findViewById(R.id.vote_select_place);
+        vote_select_place.setOnClickListener(this);
+        Button reg_vote_comment_button = (Button) findViewById(R.id.reg_vote_comment_button);
+        reg_vote_comment_button.setOnClickListener(this);
+
+        vote_layout = findViewById(R.id.vote_select_comment_layout);
 
         Intent intent = getIntent();
 
@@ -134,43 +145,47 @@ public class VoteInfoNotSelectActivity extends AppCompatActivity implements View
 
     @Override
     public void onClick(View view) {
-//        if (view.getId() == R.id.reg_comment_button){
-//
-//            String newComment = newCommentEditText.getText().toString();
-//            String newCommentWriter = MainActivity.nickname;
-//
-//            Date nowDate = new Date();
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
-//            String newCommentUploadTime = sdf.format(nowDate);
-//
-//            JSONObject commentInfo = new JSONObject();
-//            try {
-//                commentInfo.put("post_id", post_id);
-//                commentInfo.put("comment", newComment);
-//                commentInfo.put("writer", newCommentWriter);
-//                commentInfo.put("uploadTime", newCommentUploadTime);
-//            } catch (JSONException e) {
-//                throw new RuntimeException(e);
-//            }
-//
-//            Call<Boolean> call_write = service.writeComments(commentInfo.toString());
-//            call_write.enqueue(new Callback<Boolean>() {
-//                @Override
-//                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-//                    if (response.isSuccessful()) {
-//                        Log.v("TAG", "성공");
-//                        Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Log.v("TAG", "error = " + String.valueOf(response.code()));
-//                        Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//                @Override
-//                public void onFailure(Call<Boolean> call, Throwable t) {
-//                    Log.v("TAG", "Fail");
-//                    Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
+        if (view.getId() == R.id.vote_select_place){
+            TextView check_option = findViewById(R.id.vote_select_place);
+            VoteDialog voteDialog = new VoteDialog(VoteInfoNotSelectActivity.this, voteListArrayList, check_option);
+            voteDialog.show();
+        } else if (view.getId() == R.id.reg_vote_comment_button){
+            TextView place = findViewById(R.id.vote_select_place);
+            Call<Integer> call_get = service.getVoteItemId(vote_id, place.getText().toString());
+            call_get.enqueue(new Callback<Integer>() {
+                @Override
+                public void onResponse(Call<Integer> call, Response<Integer> response) {
+                    if (response.isSuccessful()) {
+                        int vote_item_id = response.body();
+                        EditText regEditText = findViewById(R.id.vote_comment_et);
+                        Call<Boolean> call_get = service.writeVoteComment(vote_id, vote_item_id, regEditText.getText().toString(), MainActivity.nickname);
+                        call_get.enqueue(new Callback<Boolean>() {
+                            @Override
+                            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                if (response.isSuccessful()) {
+                                    finish();
+                                } else {
+                                    Log.v("TAG", "error = " + String.valueOf(response.code()));
+                                    Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Boolean> call, Throwable t) {
+                                Log.v("TAG", "Fail");
+                                Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        Log.v("TAG", "error = " + String.valueOf(response.code()));
+                        Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                @Override
+                public void onFailure(Call<Integer> call, Throwable t) {
+                    Log.v("TAG", "Fail");
+                    Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

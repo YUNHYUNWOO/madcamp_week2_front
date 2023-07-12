@@ -57,6 +57,9 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("/vote/read")
     Call<ArrayList<VoteListItem>> readVotes(@Field("data") int voteId);
+    @FormUrlEncoded
+    @POST("/vote/nick_check")
+    Call<Boolean> voteWriterVotes(@Field("nickname") String nickname, @Field("vote_id") int vote_id);
 
     @FormUrlEncoded
     @PUT("/login/put/{id}")
@@ -77,8 +80,14 @@ public interface ApiService {
     Call<Integer> makeNewVoteList(@Body Postdata newVote);
 
     @POST("/vote/isOwner")
-    Call<Boolean> isOwner(@Field("id") int id ,@Field("writter") String writter);
+    Call<Boolean> isOwner(@Field("id") int id ,@Field("writer") String writer);
 
     @POST("/vote/isAlreadyVoted")
     Call<Boolean> isAlreadyVoted(@Field("id") int id, @Field("VoteContents") VoteContents voteContents);
+    @FormUrlEncoded
+    @POST("/vote/vote_comment")
+    Call<Boolean> writeVoteComment(@Field("vote_id") int vote_id, @Field("vote_item_id") int vote_item_id, @Field("comment") String comment, @Field("writer") String writer);
+    @FormUrlEncoded
+    @POST("/vote/get_vote_item_id")
+    Call<Integer> getVoteItemId(@Field("vote") int vote_id, @Field("place_name") String place_name);
 }

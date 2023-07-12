@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private View loginButton, logoutButton;
     private TextView nickName;
     private ImageView profileImage;
-    public static String URL = "https://6102-192-249-19-234.ngrok-free.app";
+    public static String URL = "https://54ee-192-249-19-234.ngrok-free.app";
     public static String RESTAPI_URL = "https://dapi.kakao.com/";
-    public static String NATIVE_KEY = "55ed3ea4a251121fe5c0f48de4705a06";
-    public static String RESTAPI_KEY = "88170e794542dd53d4e16541fa4a51f6";
+    public static String NATIVE_KEY = "";
+    public static String RESTAPI_KEY = "";
 
     public static String nickname;
 
@@ -193,5 +193,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             return null;
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EditText idEditText = findViewById(R.id.id_show);
+        EditText pwEditText = findViewById(R.id.password_show);
+
+        idEditText.setText("");
+        pwEditText.setText("");
     }
 }

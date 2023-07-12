@@ -224,6 +224,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
                 }
             });
+            finish();
         }
     }
 }
