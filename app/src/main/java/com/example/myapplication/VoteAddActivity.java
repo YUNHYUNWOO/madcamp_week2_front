@@ -127,8 +127,6 @@ public class VoteAddActivity extends AppCompatActivity implements View.OnClickLi
                         public void onResponse(retrofit2.Call<ResultCoord2Address> call, Response<ResultCoord2Address> response) {
                             if (response.isSuccessful()) {
                                 Log.d("성공?", new Gson().toJson(response.body()));
-
-                                Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
                             } else {
                                 Log.v("Dsfs", "error = " + String.valueOf(response.code()));
                                 Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
@@ -227,7 +225,7 @@ public class VoteAddActivity extends AppCompatActivity implements View.OnClickLi
 
                                                     }
                                                 });
-                                                Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), "성공적으로 업로드 되었습니다.", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 Log.v("Dsfs", "error = " + String.valueOf(response.code()));
                                                 Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
@@ -239,7 +237,6 @@ public class VoteAddActivity extends AppCompatActivity implements View.OnClickLi
                                             Toast.makeText(getApplicationContext(), "Response Fail", Toast.LENGTH_SHORT).show();
                                         }
                                     });
-                                    Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Log.v("Dsfs", "error = " + String.valueOf(response.code()));
                                     Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();

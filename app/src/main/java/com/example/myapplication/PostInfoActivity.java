@@ -116,7 +116,7 @@ public class PostInfoActivity extends AppCompatActivity implements View.OnClickL
                     }
 
                     Log.v("TAG", "성공");
-                    Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
+
                 } else {
                     Log.v("TAG", "error = " + String.valueOf(response.code()));
                     Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();

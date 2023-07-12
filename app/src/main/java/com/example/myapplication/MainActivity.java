@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         String result = response.body().toString();
                         nickname = response.body().toString();
                         Log.v(TAG, "result = " + nickname);
-                        Toast.makeText(getApplicationContext(), nickname, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), nickname + "님, 환영합니다.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, PostActivity.class);
                         startActivity(intent);
                     } else {
@@ -132,12 +132,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String TAG = "login()";
         UserApiClient.getInstance().loginWithKakaoTalk(MainActivity.this,(oAuthToken, error) -> {
             if (error != null) {
-                Log.e(TAG, "로그인 실패0", error);
+                Log.e(TAG, "로그인 실패", error);
             } else if (oAuthToken != null) {
-                Log.i(TAG, "로그인 성공(토큰) : " + oAuthToken.getAccessToken());
+                Log.i(TAG, "로그인 성공" + oAuthToken.getAccessToken());
                 getUserInfo();
-            } else {
-                Log.i(TAG, "sdasdasda ");
             }
             return null;
         });
@@ -147,9 +145,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String TAG = "accountLogin()";
         UserApiClient.getInstance().loginWithKakaoAccount(MainActivity.this,(oAuthToken, error) -> {
             if (error != null) {
-                Log.e(TAG, "로그인 실패1", error);
+                Log.e(TAG, "로그인 실패", error);
             } else if (oAuthToken != null) {
-                Log.i(TAG, "로그인 성공(토큰) : " + oAuthToken.getAccessToken());
+                Log.i(TAG, "로그인 성공" + oAuthToken.getAccessToken());
                 getUserInfo();
             }
             return null;
@@ -170,13 +168,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void onResponse(Call<String> call, Response<String> response) {
                     if (response.isSuccessful()) {
 
+                        Toast.makeText(getApplicationContext(), "로그인되었습니다.", Toast.LENGTH_SHORT).show();
                         nickname = response.body().toString();
 
                         Intent intent = new Intent(MainActivity.this, PostActivity.class);
                         startActivity(intent);
                     } else {
-                        Log.v(TAG, "error = " + String.valueOf(response.code()));
-                        Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(getApplicationContext(), "회원가입을 진행합니다.", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(MainActivity.this, KakaoJoinActivity.class);
                         intent.putExtra("username", user.getId().toString());

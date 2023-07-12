@@ -63,8 +63,9 @@
             android:id="@+id/password_show"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:inputType="text"
-            android:hint="password"/>
+            android:inputType="textPassword"
+            android:hint="password"
+            />
 
         </LinearLayout>
 

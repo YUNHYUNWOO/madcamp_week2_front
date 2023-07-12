@@ -211,9 +211,8 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                 public void onResponse(Call<String> call, Response<String> response) {
                     if (response.isSuccessful()) {
                         Log.v(TAG, "result = " + username + password);
-                        Toast.makeText(getApplicationContext(), "ㅎㅇ", Toast.LENGTH_SHORT).show();
-
                         MainActivity.nickname = response.body().toString();
+                        Toast.makeText(getApplicationContext(),MainActivity.nickname + "님, 환영합니다.", Toast.LENGTH_SHORT).show();
                     } else {
                         Log.v(TAG, "error = " + String.valueOf(response.code()));
                         Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();

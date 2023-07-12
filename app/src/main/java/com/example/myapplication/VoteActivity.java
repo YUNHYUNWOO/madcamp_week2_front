@@ -65,8 +65,6 @@ public class VoteActivity extends AppCompatActivity implements View.OnClickListe
                 public void onResponse(Call<ResultSearchKeyword> call, Response<ResultSearchKeyword> response) {
                     if (response.isSuccessful()) {
                         resultTextView.setText(response.body().documents.toString());
-                        Log.v(TAG, "성공");
-                        Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_SHORT).show();
                     } else {
                         Log.v(TAG, "error = " + String.valueOf(response.code()));
                         Toast.makeText(getApplicationContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();

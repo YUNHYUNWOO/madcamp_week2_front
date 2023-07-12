@@ -91,7 +91,7 @@
                             android:id="@+id/join_password"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
-                            android:inputType="text"
+                            android:inputType="textPassword"
                             android:hint="password"/>
                     </LinearLayout>
 
@@ -115,7 +115,7 @@
                             android:id="@+id/join_password_correction"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
-                            android:inputType="text"
+                            android:inputType="textPassword"
                             android:hint="password check"/>
                     </LinearLayout>
 

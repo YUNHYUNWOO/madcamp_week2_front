@@ -17,7 +17,8 @@ public class NetworkStatus {
             int type = networkInfo.getType();
             if(type == ConnectivityManager.TYPE_MOBILE){
                 return TYPE_MOBILE;
-            }else if(type == ConnectivityManager.TYPE_WIFI){
+            }
+            else if(type == ConnectivityManager.TYPE_WIFI){
                 return TYPE_WIFI;
             }
         }

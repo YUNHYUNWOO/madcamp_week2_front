@@ -192,10 +192,9 @@ public class KakaoJoinActivity extends AppCompatActivity implements View.OnClick
                 public void onResponse(Call<String> call, Response<String> response) {
                     if (response.isSuccessful()) {
 
-                        Toast.makeText(getApplicationContext(), "ㅎㅇ", Toast.LENGTH_SHORT).show();
-
-
                         MainActivity.nickname = response.body().toString();
+                        Toast.makeText(getApplicationContext(), MainActivity.nickname + "님, 환영합니다.", Toast.LENGTH_SHORT).show();
+
                         Intent intent = new Intent(KakaoJoinActivity.this, PostActivity.class);
                         startActivity(intent);
                     } else {
