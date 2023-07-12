@@ -213,11 +213,11 @@ public class VoteAddActivity extends AppCompatActivity implements View.OnClickLi
                                                     @Override
                                                     public void onResponse(Call<Integer> call, Response<Integer> response) {
 
-                                                        Intent intent = new Intent(VoteAddActivity.this, VoteInfoWritter.class);
-                                                        Integer a = id;
-                                                        Log.d("웨 안뒈?", a.toString());
-                                                        intent.putExtra("index", id);
-                                                        startActivity(intent);
+//                                                        Intent intent = new Intent(VoteAddActivity.this, VoteInfoWritter.class);
+//                                                        Integer a = id;
+//                                                        Log.d("웨 안뒈?", a.toString());
+//                                                        intent.putExtra("index", id);
+//                                                        startActivity(intent);
                                                         finish();
                                                     }
 

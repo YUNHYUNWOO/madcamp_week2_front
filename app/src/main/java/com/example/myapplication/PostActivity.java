@@ -22,7 +22,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_get, btn_post, btn_delete, btn_update;
 
     BoardMainFragment boardMainFragment;
-    VoteFragment recommendFragment;
+    VoteFragment voteFragment;
     ProfileFragment profileFragment;
 
     @Override
@@ -31,7 +31,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.post_activity);
 
         boardMainFragment = new BoardMainFragment();
-        recommendFragment = new VoteFragment();
+        voteFragment = new VoteFragment();
         profileFragment = new ProfileFragment();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.containers, boardMainFragment).commit();
@@ -45,7 +45,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                     getSupportFragmentManager().beginTransaction().replace(R.id.containers, boardMainFragment).commit();
                     return true;
                 } else if (item.getItemId() == R.id.recommend) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.containers, recommendFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.containers, voteFragment).commit();
                     return true;
                 }
                 else if (item.getItemId() == R.id.profile) {

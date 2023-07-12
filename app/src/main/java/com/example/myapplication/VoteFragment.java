@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,16 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,12 +28,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class BoardMainFragment extends Fragment {
-    ArrayList<PostContents> postList = new ArrayList<>(0);
+public class VoteFragment extends Fragment {
+    ArrayList<VoteContents> voteList = new ArrayList<>(0);
     private Retrofit retrofit;
     private ApiService service;
 
-    private FloatingActionButton new_post_btn;
+    private FloatingActionButton new_vote_btn;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -52,11 +43,11 @@ public class BoardMainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.board_main_page, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.vote_main_page, container, false);
 
-        Toolbar toolbar = rootView.findViewById(R.id.board_main_toolbar);
+        Toolbar toolbar = rootView.findViewById(R.id.vote_main_toolbar);
 
-        new_post_btn = rootView.findViewById(R.id.add_post_button);
+        new_vote_btn = rootView.findViewById(R.id.vote_fab_btn);
 
         initUI(rootView);
 
@@ -86,52 +77,51 @@ public class BoardMainFragment extends Fragment {
                 .build();
         service = retrofit.create(ApiService.class);
 
-        RecyclerView recyclerView = rootView.findViewById(R.id.board_recyclerView);
+        RecyclerView recyclerView = rootView.findViewById(R.id.vote_recyclerView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        PostAdapter postAdapter = new PostAdapter(postList);
-        recyclerView.setAdapter(postAdapter);
+        VoteAdapter voteAdapter = new VoteAdapter(voteList);
+        recyclerView.setAdapter(voteAdapter);
 
-        Call<ArrayList<PostContents>> call_get = service.getAllPosts();
-        call_get.enqueue(new Callback<ArrayList<PostContents>>() {
+        Call<ArrayList<VoteContents>> call_get = service.getAllVotes();
+        call_get.enqueue(new Callback<ArrayList<VoteContents>>() {
             @Override
-            public void onResponse(Call<ArrayList<PostContents>> call, Response<ArrayList<PostContents>> response) {
+            public void onResponse(Call<ArrayList<VoteContents>> call, Response<ArrayList<VoteContents>> response) {
                 if (response.isSuccessful()) {
-                    ArrayList<PostContents> postContentsDataSet = response.body();
-                    Log.v("TAG", postContentsDataSet.get(0).getUploadTime());
+                    ArrayList<VoteContents> voteContentsDataSet = response.body();
 
-                    postList = postContentsDataSet;
-                    postAdapter.setList(postList);
-                    postAdapter.notifyDataSetChanged();
+                    voteList = voteContentsDataSet;
+                    voteAdapter.setList(voteList);
+                    voteAdapter.notifyDataSetChanged();
 
-                    Log.v("TAG", "성공");
+                    Log.v("TAG", "result = ");
+//                    Toast.makeText(getContext(), "살려줘", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.v("TAG", "error = " + String.valueOf(response.code()));
                     Toast.makeText(getContext(), "error = " + String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
-            public void onFailure(Call<ArrayList<PostContents>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<VoteContents>> call, Throwable t) {
                 Log.v("TAG", "Fail");
                 Toast.makeText(getContext(), "Response Fail", Toast.LENGTH_SHORT).show();
             }
         });
-        postAdapter.setOnItemclickListener(new PostAdapter.OnItemClickListener() {
+
+        voteAdapter.setOnItemclickListener(new VoteAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(int position, String data) {
-                Intent intent = new Intent(getContext(), PostInfoActivity.class);
+                Intent intent = new Intent(getContext(), VoteInfoActivity.class);
                 startActivity(intent);
             }
         });
-
-        new_post_btn.setOnClickListener(new View.OnClickListener() {
+        new_vote_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), PostAddActivity.class);
+                Intent intent = new Intent(getContext(), VoteAddActivity.class);
                 startActivity(intent);
             }
         });
-
     }
 }

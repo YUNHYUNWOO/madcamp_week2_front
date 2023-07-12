@@ -1,12 +1,6 @@
 package com.example.myapplication;
 
-import com.kakao.sdk.user.model.User;
-
-import org.json.JSONObject;
-import org.w3c.dom.Comment;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -18,7 +12,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface ApiService {
     @GET("/")
@@ -59,6 +52,12 @@ public interface ApiService {
     @POST("/main/write_comment")
     Call<Boolean> writeComments(@Field("data") String comment);
 
+    @GET("/vote/getAllVotes")
+    Call<ArrayList<VoteContents>> getAllVotes();
+    @FormUrlEncoded
+    @POST("/vote/read")
+    Call<ArrayList<VoteListItem>> readVotes(@Field("data") int voteId);
+
     @FormUrlEncoded
     @PUT("/login/put/{id}")
     Call<ResponseBody> putFunc(@Path("id") String id, @Field("data") String data);
@@ -80,9 +79,6 @@ public interface ApiService {
     @POST("/vote/isOwner")
     Call<Boolean> isOwner(@Field("id") int id ,@Field("writter") String writter);
 
-    @GET("/vote/getAllVotes")
-    Call<ArrayList<VoteContents>> getAllVotes();
-
     @POST("/vote/isAlreadyVoted")
-    Call<Boolean> isAreadyVoted(@Field("id") int id, @Field("VoteContents") VoteContents voteContents);
+    Call<Boolean> isAlreadyVoted(@Field("id") int id, @Field("VoteContents") VoteContents voteContents);
 }
