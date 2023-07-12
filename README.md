@@ -30,6 +30,11 @@ Vote
 
 ## 로그인 및 회원가입
 
+![카카오 회원가입](https://github.com/YUNHYUNWOO/madcamp_week2_front/assets/122684695/9bd12e4b-c41e-4aab-9740-dda8f4cf8d42)
+
+![로그인 실패](https://github.com/YUNHYUNWOO/madcamp_week2_front/assets/122684695/4f3d3478-6bf6-47bf-915d-4bcafdb3a529)
+
+![회원가입](https://github.com/YUNHYUNWOO/madcamp_week2_front/assets/122684695/76e9d244-bff3-42e5-a637-9eed91ea4d6e)
 
 ### 주요 기능
 서버와 연결하여 로그인과 회원가입이 가능하다.
@@ -47,6 +52,7 @@ node.js와 MySQL을 이용하여 각 유저들의 정보를 db에 저장할 수 
 ## Tab1. 커뮤니티
 
 
+![게시판](https://github.com/YUNHYUNWOO/madcamp_week2_front/assets/122684695/356454c8-1944-403f-8c68-c465e6535424)
 ### 주요 기능
 유저들이 제목과 내용, 날짜를 포함한 글을 적을 수 있는 게시판을 구현하였다.
 유저들은 다른 유저들이 적은 글에 댓글을 달 수 있다.
@@ -56,14 +62,19 @@ node.js와 MySQL을 이용하여 각 유저들의 정보를 db에 저장할 수 
 node.js의 Body-parser와 함께 하여 서버에게 객체를 보내거나 객체를 받아오는 걸 자유자재로 할 수 있었다.
 게시판에 필요한 db 구조를 잡아 활용하였다.
 
-## Tab2. 
+## Tab2. 투표
+
+
+![KakaoTalk_20230712_202107178](https://github.com/YUNHYUNWOO/madcamp_week2_front/assets/122684695/d0e3d552-34a5-46b4-839a-8632a1cfbd85)
+![카테고리](https://github.com/YUNHYUNWOO/madcamp_week2_front/assets/122684695/b85d8d29-beaa-467b-bca4-05ae640b81d9)
+![불러온 주소](https://github.com/YUNHYUNWOO/madcamp_week2_front/assets/122684695/995dccc3-c817-4bf2-a08c-fb87dee57f87)
 
 ### 주요 기능
 어플의 핵심기능인 투표가 가능하다. 한 유저가 투표를 올리기 위한 플로팅 버튼을 누룬다.
 그러면 그 투표의 제목 내용 카테고리 위치등이 설정이 가능하다.
-위치의 경우, 내 위치와 주소 검색등이 가능하고
+위치의 경우, 내 위치로 검색 가능하고
 카테고리는 기본적으로 음식점, 카페, 피시방, 숙박시설 혹은 원하는 값으로 수정이 가능하다.
-이러한 카테고리와 위치 정보를 바탕으로 근처의 시설들로 투표가 가능하다.
+이러한 카테고리와 위치 정보를 바탕으로 근처의 시설들을 불렁ㄹ 수 있다.
 이를 보는 사람은 투표를 하기 전엔 결과를 볼 수 없고 투표를 하면 결과를 볼 수 있게된다.
 
 
@@ -73,6 +84,12 @@ node.js의 Body-parser와 함께 하여 서버에게 객체를 보내거나 객�
 이후 카카오의 REST API를 이용하여 Retrofit2로 URL로 요청을 날려 위치에 대응되는 주소를 받아 저장해주며
 이후 좌표를 쿼리에 넣어 키워드를 통한 검색을 한다. 여기서 카테고리는 검색어가 된다.
 마찬가지로 Retrofit에 GSON을 이용하여 깊은 JSON String이나 객체에 대해 대응이 가능했다.
+
+## Tab 3. 프로필
+
+DB에서 데이터를 불러올 수 있다. 로그아웃이 구현되어있다.
+![프로필](https://github.com/YUNHYUNWOO/madcamp_week2_front/assets/122684695/b4fc4f8e-92d3-4680-96e9-5734232c1235)
+
 
 
 
