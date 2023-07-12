@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.myapplication">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
@@ -17,7 +19,7 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31"
         >
-        <activity android:name=".VoteActivity"
+        <activity android:name=".VoteAddActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,14 +35,12 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <!-- Redirect URI: "kakao<Kakao Native Key>" -->
-                <data android:host="oauth" android:scheme="" />
+                <data android:host="oauth" android:scheme="61f2cd5324c92297d8af5f347fab0c8d" />
             </intent-filter>
         </activity>
         <activity android:name=".PostActivity" />
         <activity android:name=".JoinActivity"/>
         <activity android:name=".KakaoJoinActivity"/>
         <activity android:name=".AddressApiActivity"/>
-        <activity android:name=".PostAddActivity"/>
-        <activity android:name=".PostInfoActivity"/>
     </application>
 </manifest>

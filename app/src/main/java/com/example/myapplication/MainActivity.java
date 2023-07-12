@@ -38,9 +38,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private View loginButton, logoutButton;
     private TextView nickName;
     private ImageView profileImage;
-    public static String URL = "https://56d7-192-249-19-234.ngrok-free.app";
-    public static String NATIVE_KEY = "";
-    public static String RESTAPI_KEY = "";
+    public static String URL = "https://6102-192-249-19-234.ngrok-free.app";
+    public static String RESTAPI_URL = "https://dapi.kakao.com/";
+    public static String NATIVE_KEY = "61f2cd5324c92297d8af5f347fab0c8d";
+    public static String RESTAPI_KEY = "1af721d0bf655c006b4c50a196e077f5";
 
     public static String nickname;
 
@@ -102,9 +103,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
                     if (response.isSuccessful()) {
-                        String result = response.body().toString();
                         nickname = response.body().toString();
                         Log.v(TAG, "result = " + nickname);
+
                         Toast.makeText(getApplicationContext(), nickname, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, PostActivity.class);
                         startActivity(intent);
@@ -169,8 +170,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void onResponse(Call<String> call, Response<String> response) {
                     if (response.isSuccessful()) {
 
-                        nickname = response.body().toString();
-
+                        MainActivity.nickname = response.body().toString();
+                        Log.d("dfsd", nickname);
                         Intent intent = new Intent(MainActivity.this, PostActivity.class);
                         startActivity(intent);
                     } else {

@@ -1,18 +1,23 @@
 package com.example.myapplication;
 
 public class VoteContents {
-    private String id;
+    private int id;
     private String title;
+    private String address;
     private String contents;
+
+    private String category;
     private int like;
     private String writer;
     private String postImage;
     private String uploadTime;
     private int hits;
 
-    public VoteContents(String id,
+    public VoteContents(int id,
                         String title,
                         String contents,
+                        String category,
+                        String address,
                         int like,
                         String writer,
                         String postImage,
@@ -20,7 +25,9 @@ public class VoteContents {
                         int hits){
         this.id = id;
         this.title = title;
+        this.address = address;
         this.contents = contents;
+        this.category = category;
         this.like = like;
         this.writer = writer;
         this.postImage = postImage;
@@ -31,15 +38,15 @@ public class VoteContents {
     public boolean equals(Object obj){
         if (obj instanceof VoteContents) {
             VoteContents p = (VoteContents) obj;
-            return p.getId().equals(this.id);
+            return p.getId() == this.id;
         }
         return false;
     }
 
-    public String getId(){
+    public int getId(){
         return id;
     }
-    public void setId(String _id){
+    public void setId(int _id){
         id = _id;
     }
     public String getTitle(){
@@ -48,11 +55,19 @@ public class VoteContents {
     public void setTitle(String _title){
         title = _title;
     }
+    public String getAddress(){return address; }
+    public void setAddress(){this.address = address; }
     public String getContents(){
         return contents;
     }
     public void setContents(String _contents){
         contents = _contents;
+    }
+    public String getCategory(){
+        return category;
+    }
+    public void setCategory(String _category){
+        category = _category;
     }
     public int getLike(){
         return like;

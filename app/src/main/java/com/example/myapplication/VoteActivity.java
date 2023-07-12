@@ -17,6 +17,9 @@ import com.google.android.material.navigation.NavigationBarView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class VoteActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "VoteActivityLog";
-    private final String URL = "https://dapi.kakao.com/";
+
     private String API_KEY = "KakaoAK " + MainActivity.RESTAPI_KEY;
 
     private Retrofit retrofit;
@@ -42,7 +45,7 @@ public class VoteActivity extends AppCompatActivity implements View.OnClickListe
         search.setOnClickListener(this);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(MainActivity.RESTAPI_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         service = retrofit.create(KakaoAPI.class);
@@ -56,10 +59,7 @@ public class VoteActivity extends AppCompatActivity implements View.OnClickListe
 
             TextView resultTextView = findViewById(R.id.dummy_text);
 
-            String x = "36.35283473";
-            String y = "127.38550344";
-
-            Call<ResultSearchKeyword> call_get = service.getSearchKeyword(API_KEY, searchKeyword, x, y);
+            Call<ResultSearchKeyword> call_get = service.getSearchKeyword(API_KEY, searchKeyword, "", "");
             call_get.enqueue(new Callback<ResultSearchKeyword>() {
                 @Override
                 public void onResponse(Call<ResultSearchKeyword> call, Response<ResultSearchKeyword> response) {

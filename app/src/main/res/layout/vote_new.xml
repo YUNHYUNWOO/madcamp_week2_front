@@ -16,14 +16,7 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="제목"/>
+
 
         <EditText
             android:id="@+id/vote_title"
@@ -33,6 +26,7 @@
             android:layout_weight="7"
             android:layout_gravity="center"
             android:hint="제목을 입력하세요."
+            android:gravity="center"
             />
     </LinearLayout>
 
@@ -40,33 +34,67 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:paddingHorizontal="16dp">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="분류"/>
 
-        <TextView
+        <EditText
             android:layout_width="0dp"
+            android:id="@+id/vote_address"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:layout_weight="5"
+            android:layout_weight="4"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="선택해 주세요"/>
+            android:hint="주소를 선택해주세요"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/vote_category"
+            android:id="@+id/vote_current_ad"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:text="현 위치"
+            android:textColor="#000000"
+            android:background="#FFDD00"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/vote_home_ad"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:text="집"
+            android:textColor="#000000"
+            android:background="#FFDD00"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp">
+
+
+        <EditText
+            android:layout_width="0dp"
+            android:id="@+id/vote_category"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_weight="4"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:hint= "카테고리를 입력해주세요"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/vote_category_choose"
+            android:layout_width="0dp"
+
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:layout_gravity="center"
-            android:text="카테고리"
+            android:text="카테고리 선택"
             android:textColor="#000000"
             android:background="#FFDD00"/>
 
@@ -92,9 +120,10 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:hint="내용을 입력하세요."
+
             />
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/reg_button"
+            android:id="@+id/vote_post"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="등록하기"

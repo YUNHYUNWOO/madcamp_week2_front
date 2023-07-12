@@ -10,6 +10,7 @@ import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -61,6 +62,27 @@ public interface ApiService {
     @FormUrlEncoded
     @PUT("/login/put/{id}")
     Call<ResponseBody> putFunc(@Path("id") String id, @Field("data") String data);
+
     @DELETE("/login/delete/{id}")
     Call<ResponseBody> deleteFunc(@Path("id") String id);
+
+
+    //Vote add
+
+
+    @POST("/vote/newVote")
+    Call<Integer> makeNewVote(@Body VoteContents newVote);
+
+
+    @POST("/vote/newVoteList")
+    Call<Integer> makeNewVoteList(@Body Postdata newVote);
+
+    @POST("/vote/isOwner")
+    Call<Boolean> isOwner(@Field("id") int id ,@Field("writter") String writter);
+
+    @GET("/vote/getAllVotes")
+    Call<ArrayList<VoteContents>> getAllVotes();
+
+    @POST("/vote/isAlreadyVoted")
+    Call<Boolean> isAreadyVoted(@Field("id") int id, @Field("VoteContents") VoteContents voteContents);
 }
